@@ -265,9 +265,5 @@ merged_data.to_excel("Data/Merged.xlsx")
 
 #Check correlations
 corr_matrix = merged_data.corr()
-#print(corr_matrix['CH4_waste/capita (others) [tCH4/capita]'].sort_values(ascending=False))
-#print(corr_matrix['Total emissions (CDP) [tCO2-eq]'].sort_values(ascending=False))
-#print(corr_matrix['City area (WB) [km2]'].sort_values(ascending=False))
-#print(corr_matrix['Population density (UITP) [people/km2]'].sort_values(ascending=False))
 print(corr_matrix['Total emissions (CDP) [tCO2-eq]'].sort_values(ascending=False))
 print(merged_data)
