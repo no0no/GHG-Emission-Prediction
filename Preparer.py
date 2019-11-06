@@ -8,12 +8,6 @@ from sklearn.preprocessing import RobustScaler
 
 class Preparer:
 
-    def fill(self, train_set):
-        imputer = SimpleImputer(strategy='mean')
-        imputer.fit(train_set)
-        X = imputer.transform(train_set)
-        return X
-
     # Impute and standardize data
     def pipeline_gen(self, data):
         pipeline = Pipeline([
@@ -30,7 +24,18 @@ class Preparer:
         return pipeline.fit_transform(data, labels)
 
     def drop_outlier(self, data):
-       return data[(np.abs(stats.zscore(data)) < 3).all(axis=1)]
+       Q1 = data.quantile(0.25)
+       Q3 = data.quantile(0.75)
+       IQR = Q3 - Q1
+       true_list = ~((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR)))
+       return true_list
+
+    def drop_label_outlier(self, data, label):
+        Q1 = data[label].quantile(0.25)
+        Q3 = data[label].quantile(0.75)
+        IQR = Q3 - Q1
+        true_list = ~((data[label] < (Q1 - 1.5 * IQR)) | (data[label] > (Q3 + 1.5 * IQR)))
+        return true_list
 
     if __name__ == "__main__":
         pass

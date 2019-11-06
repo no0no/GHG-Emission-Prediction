@@ -4,7 +4,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
+from sklearn.ensemble import BaggingRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error
 
 class Modeler:
@@ -20,8 +22,10 @@ class Modeler:
         return train_set, test_set, labels
 
     def trainer(self, train_set, labels):
-        clf = SVR(kernel='poly', gamma='scale', C=2.0, epsilon=0.2)
+        #clf = SVR()
+        clf = BaggingRegressor(n_estimators=1000)
         #clf = LinearRegression()
+        #clf = LogisticRegression()
         clf.fit(train_set, labels)
         predictions = clf.predict(train_set)
         return predictions
@@ -36,20 +40,26 @@ class Modeler:
 
 model = Modeler()
 data = model.data_loader('Data/Merged.xlsx')
-
-idx = data['Total emissions (CDP) [tCO2-eq]'].idxmax()
-data.drop(data.index[idx], inplace=True)
+prep = Preparer()
 
 print(data.shape)
+no_outliers = prep.drop_label_outlier(data, 'Total emissions (CDP) [tCO2-eq]')
+data = data[no_outliers]
+print(data.shape)
+
+#idx = data['Total emissions (CDP) [tCO2-eq]'].idxmax()
+#data.drop(data.index[idx], inplace=True)
 
 train_set, test_set, labels = model.splitter(data, 42, 'Total emissions (CDP) [tCO2-eq]')
 
-prep = Preparer()
 X = prep.pipeline_gen(train_set)
 train_set_tr = pd.DataFrame(X, columns=train_set.columns, index=train_set.index)
-train_set_tr = prep.feature_selection(train_set_tr, labels)
 
-predictions = model.trainer(train_set_tr, labels)
+no_outliers = prep.drop_outlier(train_set_tr)
+train_set_no_o = train_set_tr[no_outliers]
+train_set_no_o = prep.feature_selection(train_set_tr, labels)
+
+predictions = model.trainer(train_set_no_o, labels)
 error = model.calculate_error(labels, predictions)
 print('Specific:', error)
 
