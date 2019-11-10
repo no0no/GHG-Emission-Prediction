@@ -264,6 +264,6 @@ merged_data.drop(to_drop, axis=1, inplace=True)
 merged_data.to_excel("Data/Merged.xlsx")
 
 #Check correlations
-corr_matrix = merged_data.corr()
-print(corr_matrix['Total emissions (CDP) [tCO2-eq]'].sort_values(ascending=False))
-print(merged_data)
+#corr_matrix = merged_data.corr()
+#print(corr_matrix['Total emissions (CDP) [tCO2-eq]'].sort_values(ascending=False))
+#print(merged_data)
