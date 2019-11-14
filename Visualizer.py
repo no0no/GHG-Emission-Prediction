@@ -19,5 +19,6 @@ class Visualizer:
         scatter_matrix(data, figsize=(16,8))
         plt.show()
 
+
     if __name__ == "__main__":
         pass

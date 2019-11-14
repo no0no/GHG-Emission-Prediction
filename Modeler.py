@@ -9,10 +9,11 @@ from sklearn.preprocessing import RobustScaler
 from sklearn.ensemble import BaggingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+from Visualizer import Visualizer
 
 pipeline = Pipeline([
-            ('imputer', SimpleImputer(strategy='mean')),
-            ('robust_scaler', RobustScaler())
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('robust_scaler', RobustScaler())
 ])
 
 class Modeler:
@@ -36,9 +37,14 @@ class Modeler:
 
     def generate_sets(self, data, seed):
         prep = Preparer()
+        viz = Visualizer()
+
+        viz.box_plot(data['Total emissions (CDP) [tCO2-eq]'])
 
         no_outliers = prep.drop_label_outlier(data, 'Total emissions (CDP) [tCO2-eq]')
         data_no_outliers = data[no_outliers]
+
+        viz.box_plot(data_no_outliers['Total emissions (CDP) [tCO2-eq]'])
 
         train_set, test_set, labels = self.splitter(data_no_outliers, seed, 'Total emissions (CDP) [tCO2-eq]')
         X = pipeline.fit_transform(train_set)
@@ -58,7 +64,7 @@ class Modeler:
         return lin_mse
 
     def cross_val_score(self, model, data, labels):
-        scores = cross_val_score(model, data, labels, scoring='neg_mean_squared_error', cv=100)
+        scores = cross_val_score(model, data, labels, scoring='neg_mean_squared_error', cv=5)
         return np.sqrt(-scores)
 
     def display_scores(self, validation_scores, test_RMSEs, names):
@@ -90,7 +96,7 @@ class Modeler:
         param_grid = [
             {'kernel': ['rbf', 'poly'], 'C': [1.0, 1.5, 2.0], 'epsilon': [0.1, 0.2, 0.3, 0.4]}
         ]
-        model = GridSearchCV(SVR(gamma='scale'), param_grid, cv=100, scoring='neg_mean_squared_error')
+        model = GridSearchCV(SVR(gamma='scale'), param_grid, cv=5, scoring='neg_mean_squared_error')
         model.fit(train_set, labels)
 
         mean = -(model.best_score_ / math.pow(10, 7))
