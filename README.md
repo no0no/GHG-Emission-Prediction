@@ -5,7 +5,7 @@ Predicts Green House Gas Emissions(GHG) of cities around the world using a datas
 
 <img src="https://i.imgur.com/jTkUqqS.png" alt="City Map">
 <img src="https://i.imgur.com/pkKrQFl.png" alt="Heat Map">
-<img src="https://i.imgur.com/IG7fUEC.png" alt="Outliers - After">
+<img src="https://i.imgur.com/lG7fUEC.png" alt="Outliers - After">
 <img src="https://i.imgur.com/KhB9xpB.png" alt="Outliers - Before">
 <img src="https://i.imgur.com/sB2VEJ6.png" alt="Population Chart">
 <img src="https://i.imgur.com/UnT0WdK.png" alt="City Area Chart">
