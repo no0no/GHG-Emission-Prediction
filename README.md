@@ -1,7 +1,7 @@
 # GHG-Emission-Prediction
 
 ## Introduction
-Predicts Green House Gas Emissions(GHG) of cities around the world using a dataset of 343 cities
+In this repository, we present a machine learning approach to prediciting the emissions of city's greenhouse gases (also known as GHG). We analyze a list of socio-economic variables of each city such as population size, hours spent in traffic, gross domestic product, etc and find the correlation between those variables and the amount of emissions each city generates.
 
 <img src="https://i.imgur.com/jTkUqqS.png" alt="City Map">
 <img src="https://i.imgur.com/pkKrQFl.png" alt="Heat Map">
