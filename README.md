@@ -12,6 +12,7 @@ In this repository, we present a machine learning approach to prediciting the em
 <img src="https://i.imgur.com/DcPaLaG.png" alt="GDP Chart">
 
 ## Dataset Description
+The dataset contains information of 343 cities and 179 socio-economic attribues of each city (343 × 179). The dataset is composed of information taken from 3 main sources, namely, 187 cities are from Carbon Disclosure Project (CDP), 73 cities are from the Bonn Center for Local Climate Action and Reporting, and 83 cities (all in China) are from the database of Peking University (PKU).
 
 ## Data Cleaning Process
 
